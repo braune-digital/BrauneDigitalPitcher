@@ -4,6 +4,7 @@ namespace BrauneDigital\Pitcher\Notification;
 
 class Notification implements NotificationInterface {
 
+	const LEVEL_OKAY = 'okay';
 	const LEVEL_DEBUG = 'debug';
 	const LEVEL_INFO = 'info';
 	const LEVEL_ERROR = 'error';
