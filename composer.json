@@ -1,0 +1,34 @@
+{
+  "name": "braune-digital/pitcher",
+  "description": "Pitcher Library",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Braune Digital GmbH",
+      "email": "mail@braune-digital.com",
+      "homepage": "www.braune-digital.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Patrick Rathje",
+      "email": "pr@braune-digital.de",
+      "role": "Developer"
+    },
+    {
+      "name": "Henrik Braune",
+      "email": "hb@braune-digital.de",
+      "role": "Developer"
+    }
+  ],
+  "keywords": [
+    "pitcher bundle watch health check notification exeption"
+  ],
+  "license": [
+    "MIT"
+  ],
+  "autoload": {
+    "psr-4": {
+      "BrauneDigital\\Pitcher\\": ""
+    }
+  }
+}
