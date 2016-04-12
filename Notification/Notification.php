@@ -25,7 +25,12 @@ class Notification implements NotificationInterface {
 	 */
 	protected $satelliteName;
 
-	public function __construct($message, $level, $satelliteName) {
+	/**
+	 * @param $level
+	 * @param $message
+	 * @param $satelliteName
+	 */
+	public function __construct($level, $message, $satelliteName) {
 		$this->message = $message;
 		$this->level = $level;
 		$this->satelliteName = $satelliteName;
