@@ -83,9 +83,9 @@ class Notification implements NotificationInterface {
 	 */
 	public function toArray() {
 		return array(
-			'satelliteName' => $this->getSatelliteName(),
+			'satellite' => $this->getSatelliteName(),
 			'message' => $this->getMessage(),
-			'lavel' => $this->getLevel(),
+			'level' => $this->getLevel(),
 		);
 	}
 

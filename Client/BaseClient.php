@@ -13,27 +13,35 @@ class BaseClient implements ClientInterface {
 	 */
 	protected $logger;
 
+
 	/**
 	 * @param $level
 	 * @param $message
 	 * @param $satelliteName
+	 * @param $url
+	 * @param $secret
+	 * @param $apiVersion
 	 */
-	public function notify($level, $message, $satelliteName) {
-		$notification = new Notification($level, $message, $this->container->getParameter('braune_digital_pitcher.satellite_name'));
+	public function notify($level, $message, $satelliteName, $url, $secret, $apiVersion) {
 
+		$notification = new Notification($level, $message, $satelliteName);
 		$client = new \GuzzleHttp\Client([
-			'base_uri' => $this->container->getParameter('braune_digital_pitcher')['pitcher_url'],
+			'base_uri' => $url,
 			'timeout'  => 3.0,
 		]);
 
 		try {
-			$response = $client->request('POST', '/api/' . $this->container->getParameter('braune_digital_pitcher')['api_version'] . '/notify', [
-				'form_params' => array_merge($notification->toArray(), array(
-					'secret' => $this->container->getParameter('braune_digital_pitcher')['secret']
-				))
+			$response = $client->request('POST', 'api/' . $apiVersion . '/notify', [
+				'form_params' => $notification->toArray(),
+				'headers' => array(
+					'secret' => $secret
+				)
 			]);
-		} catch (ConnectException $e) {
-			$this->logger->error($e->getMessage());
+			if ($response->getStatusCode() != 200) {
+				$this->logger->error('Pitcher notification error: ' . $response->getBody());
+			}
+		} catch (\Exception $e) {
+			$this->logger->error('Pitcher notification exception: ' . $e->getMessage());
 		}
 	}
 
