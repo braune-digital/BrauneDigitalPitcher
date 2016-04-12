@@ -22,7 +22,7 @@ class BaseClient implements ClientInterface {
 	 * @param $secret
 	 * @param $apiVersion
 	 */
-	public function notify($level, $message, $satelliteName, $url, $secret, $apiVersion) {
+	public function pitch($level, $message, $satelliteName, $url, $secret, $apiVersion) {
 
 		$notification = new Notification($level, $message, $satelliteName);
 		$client = new \GuzzleHttp\Client([
@@ -31,7 +31,7 @@ class BaseClient implements ClientInterface {
 		]);
 
 		try {
-			$response = $client->request('POST', 'api/' . $apiVersion . '/notify', [
+			$response = $client->request('POST', 'api/' . $apiVersion . '/pitch', [
 				'form_params' => $notification->toArray(),
 				'headers' => array(
 					'secret' => $secret

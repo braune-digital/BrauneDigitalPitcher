@@ -12,7 +12,7 @@ interface ClientInterface {
 	 * @param $satelliteName
 	 * @return mixed
 	 */
-	public function notify($level, $message, $satelliteName, $url, $secret, $apiVersion);
+	public function pitch($level, $message, $satelliteName, $url, $secret, $apiVersion);
 
 	/**
 	 * @return mixed
