@@ -62,5 +62,5 @@ The Pitcher App returns a JSON-Reponse:
 {"success":true,"payload":{"level":"critical","message":"XML API from server B is down","date":"2016-04-13T13:23:15+0200","satellite":"YOU_ARE_FREE_TO_CHOOSE_A_NAME","checked":false,"id":141},"errors":[]}
 ```
 
-Now you will get notifications from the Pitcher app. You can define notification channels in your user profile at pitcher-app.com/#/login.
+Now you will get notifications from the Pitcher app. You can define notification channels in your user profile at http://www.pitcher-app.com/#/login.
 
