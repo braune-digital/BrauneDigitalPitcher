@@ -3,7 +3,7 @@ This PHP component allows to easily send exceptions from your project to the Pit
 
 ## Integrations
 
-Currently there´s a bundle for Symfony which integrated the component as a service (https://github.com/braune-digital/BrauneDigitalPitcherBundle).
+Currently there´s a bundle for Symfony which integrates the component as a service (https://github.com/braune-digital/BrauneDigitalPitcherBundle).
 
 ## Installation
 
