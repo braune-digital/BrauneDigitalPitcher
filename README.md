@@ -1,4 +1,7 @@
 # Pitcher
+
+<img src="http://www.pitcher-app.com/images/Pitcher-Logo-Pos-Big.png" width="400">
+
 This PHP component allows to easily send exceptions from your project to the Pitcher App, which will send notifications through different channels (iOS Push Notification, E-Mail or WAMP Websocket). 
 
 ## Integrations
