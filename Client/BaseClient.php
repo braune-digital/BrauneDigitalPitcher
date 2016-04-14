@@ -13,6 +13,27 @@ class BaseClient implements ClientInterface {
 	 */
 	protected $logger;
 
+	protected $satelliteName;
+
+	protected $url;
+
+
+	protected $apiVersion;
+
+
+	/**
+	 * @param string $satelliteName
+	 * @param string $url
+	 * @param string $secret
+	 * @param string $apiVersion
+	 */
+	public function __construct($satelliteName, $url, $secret, $apiVersion) {
+		$this->satelliteName = $satelliteName;
+		$this->url = $url;
+		$this->secret = $secret;
+		$this->apiVersion = $apiVersion;
+	}
+
 
 	/**
 	 * @param $level
@@ -22,19 +43,19 @@ class BaseClient implements ClientInterface {
 	 * @param $secret
 	 * @param $apiVersion
 	 */
-	public function pitch($level, $message, $satelliteName, $url, $secret, $apiVersion) {
+	public function pitch($level, $message) {
 
-		$notification = new Notification($level, $message, $satelliteName);
+		$notification = new Notification($level, $message, $this->satelliteName);
 		$client = new \GuzzleHttp\Client([
-			'base_uri' => $url,
+			'base_uri' => $this->url,
 			'timeout'  => 3.0,
 		]);
 
 		try {
-			$response = $client->request('POST', 'api/' . $apiVersion . '/pitch', [
+			$response = $client->request('POST', 'api/' . $this->apiVersion . '/pitch', [
 				'form_params' => $notification->toArray(),
 				'headers' => array(
-					'secret' => $secret
+					'secret' => $this->secret
 				)
 			]);
 			if ($response->getStatusCode() != 200) {

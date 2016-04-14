@@ -9,10 +9,9 @@ interface ClientInterface {
 	/**
 	 * @param $level
 	 * @param $message
-	 * @param $satelliteName
 	 * @return mixed
 	 */
-	public function pitch($level, $message, $satelliteName, $url, $secret, $apiVersion);
+	public function pitch($level, $message);
 
 	/**
 	 * @return mixed
