@@ -13,12 +13,20 @@ class BaseClient implements ClientInterface {
 	 */
 	protected $logger;
 
+	/**
+	 * @var string
+	 */
 	protected $satelliteName;
 
-	protected $url;
+	/**
+	 * @var string
+	 */
+	protected $url = 'https://api.pitcher-app.com/';
 
-
-	protected $apiVersion;
+	/**
+	 * @var integer
+	 */
+	protected $apiVersion = 1;
 
 
 	/**
@@ -27,21 +35,21 @@ class BaseClient implements ClientInterface {
 	 * @param string $secret
 	 * @param string $apiVersion
 	 */
-	public function __construct($satelliteName, $url, $secret, $apiVersion) {
+	public function __construct($satelliteName, $secret, $apiVersion = null, $url = null) {
 		$this->satelliteName = $satelliteName;
-		$this->url = $url;
+		if ($url) {
+			$this->url = $url;
+		}
 		$this->secret = $secret;
-		$this->apiVersion = $apiVersion;
+		if ($url) {
+			$this->apiVersion = $apiVersion;
+		}
 	}
 
 
 	/**
 	 * @param $level
 	 * @param $message
-	 * @param $satelliteName
-	 * @param $url
-	 * @param $secret
-	 * @param $apiVersion
 	 */
 	public function pitch($level, $message) {
 
