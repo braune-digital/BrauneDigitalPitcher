@@ -34,10 +34,9 @@ interface ClientInterface {
 	/**
 	 * @param $level
 	 * @param $message
-	 * @param $satelliteName
 	 * @return mixed
 	 */
-	public function pitch($level, $message, $satelliteName, $url, $secret, $apiVersion);
+	public function pitch($level, $message);
 
 	/**
 	 * @return mixed
@@ -55,10 +54,8 @@ interface ClientInterface {
 
 You can use this BaseClient and pitch messages:
 ```php
-$client = new \BrauneDigital\Pitcher\Client\BaseClient();
-$satelliteName = "YOU_ARE_FREE_TO_CHOOSE_A_NAME";
-$url = http://www.pitcher-app.com/
-$client->pitch(\BrauneDigital\Pitcher\Notification\Notification::LEVEL_CRITICAL, 'XML API from server B is down', $satelliteName, $url, $secret, 1);
+$client = new \BrauneDigital\Pitcher\Client\BaseClient('SATELLITE_NAME', 'SECRET');
+$client->pitch(\BrauneDigital\Pitcher\Notification\Notification::LEVEL_CRITICAL, 'XML API from server B is down');
 ```
 
 The Pitcher App returns a JSON-Reponse:
