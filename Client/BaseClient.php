@@ -3,7 +3,6 @@
 namespace BrauneDigital\Pitcher\Client;
 
 use BrauneDigital\Pitcher\Notification\Notification;
-use GuzzleHttp\Exception\ConnectException;
 use Psr\Log\LoggerInterface;
 
 class BaseClient implements ClientInterface {
@@ -54,21 +53,32 @@ class BaseClient implements ClientInterface {
 	public function pitch($level, $message) {
 
 		$notification = new Notification($level, $message, $this->satelliteName);
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => $this->url,
-			'timeout'  => 3.0,
-		]);
 
 		try {
-			$response = $client->request('POST', 'api/' . $this->apiVersion . '/pitch', [
-				'form_params' => $notification->toArray(),
-				'headers' => array(
-					'secret' => $this->secret
-				)
-			]);
-			if ($response->getStatusCode() != 200) {
-				$this->logger->error('Pitcher notification error: ' . $response->getBody());
+			$fields = $notification->toArray();
+			$fieldsString = '';
+			foreach($fields as $key => $value) {
+				$fieldsString .= $key.'='.$value.'&';
 			}
+			rtrim($fieldsString, '&');
+
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_URL, $this->url . 'asdsdpi/' . $this->apiVersion . '/pitch');
+			curl_setopt($ch,CURLOPT_POST, count($fields));
+			curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsString);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'secret: ' . $this->secret,
+			));
+			$response = curl_exec($ch);
+			$info = curl_getinfo($ch);
+			curl_close($ch);
+
+			if (!isset($info['http_code']) || $info['http_code'] != 200) {
+				throw new \Exception('Pitcher notification error: ' . $response);
+			}
+
+
 		} catch (\Exception $e) {
 			$this->logger->error('Pitcher notification exception: ' . $e->getMessage());
 		}
