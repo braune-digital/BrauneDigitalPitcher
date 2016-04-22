@@ -63,7 +63,7 @@ class BaseClient implements ClientInterface {
 			rtrim($fieldsString, '&');
 
 			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL, $this->url . 'asdsdpi/' . $this->apiVersion . '/pitch');
+			curl_setopt($ch,CURLOPT_URL, $this->url . 'api/' . $this->apiVersion . '/pitch');
 			curl_setopt($ch,CURLOPT_POST, count($fields));
 			curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsString);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
