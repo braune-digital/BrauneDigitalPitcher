@@ -25,7 +25,7 @@ class BaseClient implements ClientInterface {
 	/**
 	 * @var integer
 	 */
-	protected $apiVersion = 1;
+	protected $apiVersion = 'v1';
 
 
 	/**
@@ -40,7 +40,7 @@ class BaseClient implements ClientInterface {
 			$this->url = $url;
 		}
 		$this->secret = $secret;
-		if ($url) {
+		if ($apiVersion) {
 			$this->apiVersion = $apiVersion;
 		}
 	}
