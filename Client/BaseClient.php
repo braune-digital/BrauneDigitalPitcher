@@ -73,7 +73,7 @@ class BaseClient implements ClientInterface {
 		curl_close($ch);
 
 		if (!isset($info['http_code']) || $info['http_code'] != 200) {
-			$this->logger->error('Pitcher notification exception: ' . $e->getMessage());
+			$this->logger->error('Pitcher notification exception: ' . $response);
 		}
 	}
 
