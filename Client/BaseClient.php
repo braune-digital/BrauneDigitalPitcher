@@ -53,33 +53,26 @@ class BaseClient implements ClientInterface {
 	public function pitch($level, $message) {
 
 		$notification = new Notification($level, $message, $this->satelliteName);
+		$fields = $notification->toArray();
+		$fieldsString = '';
+		foreach($fields as $key => $value) {
+			$fieldsString .= $key.'='.$value.'&';
+		}
+		rtrim($fieldsString, '&');
 
-		try {
-			$fields = $notification->toArray();
-			$fieldsString = '';
-			foreach($fields as $key => $value) {
-				$fieldsString .= $key.'='.$value.'&';
-			}
-			rtrim($fieldsString, '&');
+		$ch = curl_init();
+		curl_setopt($ch,CURLOPT_URL, $this->url . 'api/' . $this->apiVersion . '/pitch');
+		curl_setopt($ch,CURLOPT_POST, count($fields));
+		curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsString);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'secret: ' . $this->secret,
+		));
+		$response = curl_exec($ch);
+		$info = curl_getinfo($ch);
+		curl_close($ch);
 
-			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL, $this->url . 'api/' . $this->apiVersion . '/pitch');
-			curl_setopt($ch,CURLOPT_POST, count($fields));
-			curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsString);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-				'secret: ' . $this->secret,
-			));
-			$response = curl_exec($ch);
-			$info = curl_getinfo($ch);
-			curl_close($ch);
-
-			if (!isset($info['http_code']) || $info['http_code'] != 200) {
-				throw new \Exception('Pitcher notification error: ' . $response);
-			}
-
-
-		} catch (\Exception $e) {
+		if (!isset($info['http_code']) || $info['http_code'] != 200) {
 			$this->logger->error('Pitcher notification exception: ' . $e->getMessage());
 		}
 	}
